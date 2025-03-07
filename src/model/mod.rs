@@ -1,4 +1,4 @@
-pub use classifier::ModernBertForSequenceClassification;
 pub use config::Config;
-mod classifier;
+pub use modern_bert::ModernBertForSequenceClassification;
 mod config;
+mod modern_bert;

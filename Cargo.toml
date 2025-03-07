@@ -1,0 +1,12 @@
+[package]
+name = "modern-toxic-classifier"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+candle-core = "0.8.3"
+candle-nn = "0.8.3"
+candle-transformers = "0.8.3"
+serde = "1.0.218"
+serde_json = "1.0.140"
+tokenizers = { version = "0.21.0", default-features = false, features = ["onig"] }

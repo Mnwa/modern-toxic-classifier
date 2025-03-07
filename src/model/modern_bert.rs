@@ -1,4 +1,4 @@
-use candle_core::{DType, Device, Result, Tensor, D};
+use candle_core::{DType, Device, IndexOp, Result, Tensor, D};
 use candle_nn::{
     embedding, layer_norm_no_bias, linear, linear_no_bias, ops::softmax, Embedding, LayerNorm,
     Linear, Module, VarBuilder,
@@ -410,7 +410,7 @@ impl ModernBertForSequenceClassification {
     pub fn forward(&self, xs: &Tensor, mask: &Tensor) -> Result<Tensor> {
         let output = self.model.forward(xs, mask)?;
         let last_hidden_state = match self.classifier_pooling {
-            ClassifierPooling::CLS => output,
+            ClassifierPooling::CLS => output.i((.., .., 0))?,
             ClassifierPooling::MEAN => {
                 let unsqueezed_mask = &mask.unsqueeze(D::Minus1)?.to_dtype(DType::F32)?;
                 let sum_output = output.broadcast_mul(&unsqueezed_mask)?.sum(1)?;

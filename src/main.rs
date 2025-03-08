@@ -1,14 +1,9 @@
 mod classifier;
-mod model;
-
 use crate::classifier::{Device, ModernBertForSequenceClassificationLabeled};
 
 fn main() {
-    let model = ModernBertForSequenceClassificationLabeled::load(
-        "/Users/mnwa/python/negfilter/toxic2/",
-        Device::Cpu,
-    )
-    .unwrap();
+    let path = std::env::var("MODEL_PATH").unwrap();
+    let model = ModernBertForSequenceClassificationLabeled::load(path, Device::Cpu).unwrap();
 
     let stdin = std::io::stdin();
     stdin.lines().for_each(|line| {

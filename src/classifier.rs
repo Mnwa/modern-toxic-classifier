@@ -1,7 +1,7 @@
-use crate::model::Config;
 pub use candle_core::Device;
 use candle_core::{DType, Tensor};
 use candle_nn::VarBuilder;
+use candle_transformers::models::modernbert::{Config, ModernBertForSequenceClassification};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt::Display;
@@ -58,7 +58,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Clone)]
 pub struct ModernBertForSequenceClassificationLabeled {
-    model: crate::model::ModernBertForSequenceClassification,
+    model: ModernBertForSequenceClassification,
     id_to_label: HashMap<String, String>,
     tokenizer: Tokenizer,
     device: Device,
@@ -78,7 +78,7 @@ impl ModernBertForSequenceClassificationLabeled {
         tokenizer
             .with_padding(Some(PaddingParams {
                 strategy: tokenizers::PaddingStrategy::BatchLongest,
-                pad_id: config.modernbert_config.pad_token_id,
+                pad_id: config.pad_token_id,
                 ..Default::default()
             }))
             .with_truncation(None)?;
@@ -89,9 +89,13 @@ impl ModernBertForSequenceClassificationLabeled {
             unsafe { VarBuilder::from_mmaped_safetensors(&[&dir], DType::F32, &device) }?;
         dir.pop();
 
-        let model = crate::model::ModernBertForSequenceClassification::load(model_builder, &config)
+        let model = ModernBertForSequenceClassification::load(model_builder, &config)
             .map_err(Error::CandleError)?;
-        let id_to_label = config.classifier_config.id2label.clone();
+        let id_to_label = config
+            .classifier_config
+            .as_ref()
+            .map(|cc| cc.id2label.clone())
+            .unwrap_or_default();
         Ok(Self {
             model,
             id_to_label,

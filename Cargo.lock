@@ -88,8 +88,7 @@ checksum = "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b"
 [[package]]
 name = "candle-core"
 version = "0.8.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bef79e00300acaaa6b0b33168e2ed5050f06125d1add87e7103c40a119083581"
+source = "git+https://github.com/Mnwa/candle.git?branch=modernbert-sentency-classifier#5727ee5b145bf366e35b9e5f0229eedb9f1f1f1f"
 dependencies = [
  "byteorder",
  "gemm 0.17.1",
@@ -110,8 +109,7 @@ dependencies = [
 [[package]]
 name = "candle-nn"
 version = "0.8.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e56763529af17e3483297e40fddeb2992117485498ec56a7c410c8a7825b7fee"
+source = "git+https://github.com/Mnwa/candle.git?branch=modernbert-sentency-classifier#5727ee5b145bf366e35b9e5f0229eedb9f1f1f1f"
 dependencies = [
  "candle-core",
  "half",
@@ -125,8 +123,7 @@ dependencies = [
 [[package]]
 name = "candle-transformers"
 version = "0.8.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf2ddc361689defc282e870f18b138940b2548276d075801052eee5d11293029"
+source = "git+https://github.com/Mnwa/candle.git?branch=modernbert-sentency-classifier#5727ee5b145bf366e35b9e5f0229eedb9f1f1f1f"
 dependencies = [
  "byteorder",
  "candle-core",
